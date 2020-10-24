@@ -5,3 +5,4 @@ class User(models.Model):
     name = models.CharField(max_length=64)
     rolls = models.IntegerField()
     claims = models.IntegerField()
+    
