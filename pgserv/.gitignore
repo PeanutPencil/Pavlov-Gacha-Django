@@ -1,4 +1,6 @@
 db.sqlite3
+images/logos/users/*
+!images/logos/users/placeholder.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

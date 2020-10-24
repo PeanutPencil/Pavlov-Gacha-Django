@@ -6,5 +6,5 @@ class Card(models.Model):
     weapon = models.CharField(max_length=16)
     rarity = models.IntegerField()
     image = models.CharField(max_length=255)
-    vrml_id = models.CharField(max_length=16)
+    vrml_id = models.CharField(max_length=32)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="cards")
