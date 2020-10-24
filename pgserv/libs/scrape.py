@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
             # Download and save the image
             response = requests.get(f'{BASE_VRML_URL}{image}', stream=True)
-            with open(image, 'wb') as out_file:
+            with open(f'.{image}', 'wb') as out_file:
                 shutil.copyfileobj(response.raw, out_file)
 
             # Create cards in the db which are unique to player and weapon
@@ -86,7 +86,9 @@ if __name__ == '__main__':
                     'image': image,
                     'vrml_id': id_,
                 })
-                print(r.status_code, r.json()['name'])
+                print(r.status_code, name)
+                if r.status_code != 201:
+                    print(r.text)
 
     print('success')
 
