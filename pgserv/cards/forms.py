@@ -6,3 +6,6 @@ class RollsForm(forms.Form):
 class ClaimForm(forms.Form):
     username = forms.CharField(max_length=100)
     card_id = forms.IntegerField()
+
+class CardsListForm(forms.Form):
+    q = forms.CharField(max_length=16, required=False)
