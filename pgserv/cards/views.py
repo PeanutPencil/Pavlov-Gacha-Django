@@ -6,6 +6,9 @@ from rest_framework import status
 from cards.models import Card
 from cards.serializers import CardSerializer
 from django.http import Http404
+import random
+from cards.forms import RollsForm, ClaimForm
+from users.models import User
 
 
 class CardList(APIView):
@@ -21,7 +24,7 @@ class CardList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+     
 
 class CardDetail(APIView):
     """
@@ -50,3 +53,46 @@ class CardDetail(APIView):
         card = self.get_object(pk)
         card.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class RollView(APIView):
+    """ return random unclaimed card """
+    def post(self, request):
+        # form validation 
+        form = RollsForm(request.data)
+        if not form.is_valid():
+            return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+        # verifying user can roll
+        user = User.objects.get(name = form.cleaned_data["username"])
+        if user.rolls <= 0 :
+            return Response("user does not have enough rolls", status=status.HTTP_400_BAD_REQUEST)
+        # getting the card
+        cards = Card.objects.filter(user=None)
+        card = random.choice(cards)
+        serializer = CardSerializer(card)
+        # reducing rolls
+        user.rolls -= 1
+        user.save()
+        
+        return Response(serializer.data)
+    
+class ClaimView(APIView):
+    def post(self, request):
+        # form validation 
+        form = ClaimForm(request.data)
+        if not form.is_valid():
+            return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+        # verifying user can claim
+        user = User.objects.get(name = form.cleaned_data["username"])
+        if user.claims <= 0 :
+            return Response("user does not have enough claims", status=status.HTTP_400_BAD_REQUEST)
+        # getting the card
+        card = Card.objects.get(pk = form.cleaned_data["card_id"])
+        # assign the user to the card
+        card.user = user
+        card.save()
+        serializer = CardSerializer(card)
+        # reducing claims
+        user.claims -= 1
+        user.save()
+        return Response(serializer.data)
