@@ -7,14 +7,21 @@ from cards.models import Card
 from cards.serializers import CardSerializer
 from django.http import Http404
 import random
-from cards.forms import RollsForm, ClaimForm
+from cards.forms import RollsForm, ClaimForm, CardsListForm
 from users.models import User
 
 
 class CardList(APIView):
     """ List all cards or create a new card """
     def get(self, request):
-        cards = Card.objects.all()
+        form = CardsListForm(request.query_params)
+        if not form.is_valid():
+            return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+        q = form.cleaned_data["q"]
+        if q :
+            cards = Card.objects.filter(name__icontains=q)
+        else:
+            cards = Card.objects.all()        
         serializer = CardSerializer(cards, many=True)
         return Response(serializer.data)
 
