@@ -6,6 +6,8 @@ from cards import views
 urlpatterns = [
     path('', views.CardList.as_view()),
     path('<int:pk>/', views.CardDetail.as_view()),
+    path('roll/', views.RollView.as_view()),
+    path('claim/', views.ClaimView.as_view())
 ]
 
 
