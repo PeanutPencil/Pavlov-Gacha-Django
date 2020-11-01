@@ -70,7 +70,7 @@ class RollView(APIView):
         if not form.is_valid():
             return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
         # verifying user can roll
-        user = User.objects.get(name = form.cleaned_data["username"])
+        user = User.objects.get(pk=form.cleaned_data["user_id"])
         if user.rolls <= 0 :
             return Response("user does not have enough rolls", status=status.HTTP_400_BAD_REQUEST)
         # getting the card
@@ -90,7 +90,7 @@ class ClaimView(APIView):
         if not form.is_valid():
             return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
         # verifying user can claim
-        user = User.objects.get(name = form.cleaned_data["username"])
+        user = User.objects.get(pk=form.cleaned_data["user_id"])
         if user.claims <= 0 :
             return Response("user does not have enough claims", status=status.HTTP_400_BAD_REQUEST)
         # getting the card

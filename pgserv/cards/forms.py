@@ -1,10 +1,10 @@
 from django import forms
 
 class RollsForm(forms.Form):
-    username = forms.CharField(max_length=100)
+    user_id = forms.IntegerField()
 
 class ClaimForm(forms.Form):
-    username = forms.CharField(max_length=100)
+    user_id = forms.IntegerField()
     card_id = forms.IntegerField()
 
 class CardsListForm(forms.Form):

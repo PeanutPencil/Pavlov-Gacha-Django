@@ -120,4 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'              # Used to include static resources in web pages
+STATIC_ROOT = './static/'            # Used to get static resources from web server
+MEDIA_URL = '/images/'               # Used to include media items in web pages
+MEDIA_ROOT = './images/'             # Used to get media items from web server
