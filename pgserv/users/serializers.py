@@ -5,5 +5,5 @@ from users.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name', 'rolls', 'claims'] #cards
+        fields = ['id', 'name', 'rolls', 'claims', 'avatar_url'] #cards
     #cards = CardSerializer(many=True, read_only=True)
