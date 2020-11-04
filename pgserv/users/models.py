@@ -6,4 +6,4 @@ class User(models.Model):
     name = models.CharField(max_length=64)
     rolls = models.IntegerField()
     claims = models.IntegerField()
-    
+    avatar_url = models.CharField(max_length=255)
