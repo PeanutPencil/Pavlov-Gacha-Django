@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 BASE_VRML_URL = 'https://vrmasterleague.com'
 
 WEAPONS = {
-    'M4A3':         1,
+    'M4A3':         2,
     'AUG':          2,
     'AK47':         4,
     'AK12':         7,
