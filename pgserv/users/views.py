@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from users.models import User   
+from users.models import User
 from users.serializers import UserSerializer
 from django.http import Http404
 
@@ -12,7 +12,7 @@ class UserList(APIView):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-    
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -48,4 +48,3 @@ class UserDetail(APIView):
         card = self.get_object(pk)
         card.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
